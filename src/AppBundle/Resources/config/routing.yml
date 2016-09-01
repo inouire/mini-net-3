@@ -1,0 +1,228 @@
+# main routes
+        
+home:
+    path:  /
+    requirements:
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Default:home }
+    
+oldHome:
+    path:  /home
+    requirements:
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Default:oldHome }
+
+archives:
+    path:  /posts
+    requirements:
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Archives:viewCurrentMonth }
+    
+posts:
+    path:  /posts/{year}/{month}
+    requirements:
+        year:  \d+
+        month: \d+
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Archives:posts }
+    
+# galeries
+    
+albums:
+    path:  /albums
+    requirements:
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Album:viewCurrentMonthPicturesAlbum }
+    
+tag_list:
+    path: /tags
+    requirements:
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Tag:list }
+
+album:
+    path:  /album/{year}/{month}
+    requirements:
+        year:  \d+
+        month: \d+
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Album:viewPicturesAlbum }
+
+tag_album:
+    path: /album/{tag}
+    requirements:
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Album:viewTagAlbum }
+
+videos:
+    path: /videos
+    requirements:
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Album:viewVideosAlbum }
+
+
+# routes for actions on posts
+
+new_post:
+    path:  /post/new
+    requirements:
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Post:new }
+    
+view_post:
+    path:  /post/{id}
+    requirements:
+        post_id:  \d+
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Post:view }   
+
+edit_post:
+    path:  /post/{id}/edit/{image_to_reload}
+    requirements:
+        post_id:  \d+
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Post:edit, image_to_reload: -1 }   
+    
+update_post:
+    path: /post/update
+    requirements:
+        _method:  POST
+    defaults: { _controller: InouireMininetBundle:Post:updateContent }
+    
+    
+# routes for actions on comments
+
+post_comment:
+    path:  /comment
+    requirements:
+        _method:  POST
+        _format:  json
+    defaults: { _controller: InouireMininetBundle:Comment:postComment }
+
+update_comment:
+    path:  /comment/{id}
+    requirements:
+        _method:  POST
+        _format:  json
+    defaults: { _controller: InouireMininetBundle:Comment:updateComment }
+    
+delete_comment:
+    path:  /comment/{id}
+    requirements:
+        comment_id:  \d+
+        _method:  DELETE
+        _format:  json
+    defaults: { _controller: InouireMininetBundle:Comment:deleteComment }
+    
+# routes for actions on images
+
+get_image:
+    path:  /image/{id}.jpg
+    requirements:
+        id:  \d+
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Image:getImage}   
+
+get_thumbnail:
+    path:  /thumbnail/{id}
+    requirements:
+        id:  \d+
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Image:getImage, is_thumbnail: true}   
+    
+delete_image:
+    path:  /image/{id}
+    requirements:
+        iid:  \d+
+        _method:  DELETE
+    defaults: { _controller: InouireMininetBundle:Image:deleteImage }  
+     
+rotate_image:
+    path:  /image/{id}/rotate
+    requirements:
+        id:  \d+
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Image:rotateImage }
+    
+tag_image:
+    path: /image/{id}/tag/{tag_id}
+    requirements:
+        id: \d+
+        tag_id:   \d+
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Tag:addTagToImage }
+    
+untag_image:
+    path: /image/{id}/untag/{tag_id}
+    requirements:
+        id: \d+
+        tag_id:   \d+
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Tag:removeTagFromImage }
+
+# routes for actions on videos
+
+get_video:
+    path:  /video/{id}
+    requirements:
+        id:  \d+
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Video:getVideo}   
+
+get_video_thumbnail:
+    path:  /video/thumbnail/{id}
+    requirements:
+        id:  \d+
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Video:getVideoThumbnail}  
+    
+delete_video:
+    path:  /video/{id}
+    requirements:
+        id:  \d+
+        _method:  DELETE
+    defaults: { _controller: InouireMininetBundle:Video:deleteVideo } 
+
+# routes for action towards sharing
+
+select_post_for_sharelink:
+    path:  /share
+    requirements:
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Archives:selectPostToShareFromArchives }
+    
+create_sharelink:
+    path: /post/{id}/share
+    requirements:
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:ShareLink:new }   
+
+get_sharelink:
+    path: /public/{token}
+    requirements:
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:ShareLink:get } 
+
+get_sharelink_image:
+    path: /public/{token}/image/{id}.jpg
+    requirements:
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:ShareLink:getImage } 
+
+get_sharelink_thumbnail:
+    path: /public/{token}/thumbnail/{id}
+    requirements:
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:ShareLink:getImage, is_thumbnail: true}   
+    
+get_sharelink_video:
+    path: /public/{token}/video/{id}
+    requirements:
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:ShareLink:getVideo } 
+
+get_sharelink_video_thumbnail:
+    path: /public/{token}/video/thumbnail/{id}
+    requirements:
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:ShareLink:getVideoThumbnail}

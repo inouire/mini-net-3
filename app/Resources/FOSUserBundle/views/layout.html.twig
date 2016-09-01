@@ -1,0 +1,27 @@
+{% extends 'app.html.twig' %}
+
+{% block body %}
+
+    {% include 'default/blankBlock.html.twig' %}
+    
+    <center>
+        <div style="width:300px">
+        
+            {% for type, flashMessages in app.session.flashbag.all() %}
+                {% for flashMessage in flashMessages %}
+                    <div class="flash-{{ type }}">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            
+            {% block fos_user_content %}
+            {% endblock fos_user_content %}
+            
+        </div>
+    </center>
+    
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

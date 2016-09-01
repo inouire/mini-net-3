@@ -1,0 +1,20 @@
+{% set new_line = 1 %}
+{% set row_nb = 0 %}
+
+{% for tag in tags %}
+    {% if new_line == 1 %}<div class="row" style="text-align:center">{% set new_line = 0 %}{%endif%}
+    <div class="span2 tag">
+        <a href="{{ path('tag_album',{'tag':tag.name}) }}">
+          {{tag.name}}
+        </a>
+        {% set count = tag.images | length%}
+        <span class="label {%if count>0 %}label-info{%endif%}">{{count}}</span>
+    </div>
+    {% set row_nb = row_nb + 1 %}
+    {% if row_nb >= 6 %}
+        {% set new_line = 1 %}
+        {% set row_nb = 1 %}
+    {% endif %}
+    {% if new_line == 1 or loop.last %}</div>{%endif%}
+{% endfor %}
+

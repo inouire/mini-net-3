@@ -1,6 +1,14 @@
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
+# app:
+#     resource: "@AppBundle/Controller/"
+#     type:     annotation
+
+inouire_mininet:
+    resource: "@AppBundle/Resources/config/routing.yml"
+    prefix:   /
+    
+inouire_mininet_admin:
+    resource: "@AppBundle/Resources/config/routing_admin.yml"
+    prefix:   /admin
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"

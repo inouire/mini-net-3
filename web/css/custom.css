@@ -1,0 +1,51 @@
+
+body {
+    padding-bottom: 40px;
+    background-image: url('bg/debut_light.png');
+    background-repeat: repeat;
+}
+.tole {
+    background-image: url('bg/shl.png');
+    background-repeat: repeat;
+}
+.very-close{
+    margin-top:3px;
+    margin-bottom:3px;
+    padding: 2px;
+    padding-left: 6px;
+    max-width: 75%;
+    font-size: 0.9em;
+}
+.author-comment{
+    max-width: 75%;
+    margin-left: 25%;
+}
+.anchoroffset{
+   position:relative;
+   top:-30px;
+}
+.big-blank-block{
+    height: 80px;
+}
+.medium-blank-block{
+    height: 40px;
+}
+.small-blank-block{
+    height: 15px;
+}
+.tag{
+    font-size:1.6em;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 5px;
+    background-image: url('bg/paper.png');
+    background-repeat: repeat;
+    border: 1px solid #c3bfb7;
+    margin-right: -2px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+.admin{
+    color: #C61917;
+}
