@@ -1,0 +1,57 @@
+{% extends 'app.html.twig' %}
+
+{% block body %}
+    
+        <div class="row">
+        
+            <div class="span2">
+                <h4>Aujourd'hui</h4>
+            </div>
+            
+            <div class="span4">
+                <h4><a href="#" >Robot</a></h4>
+                <p>
+                    Bienvenue sur votre espace familial mini-net !<br><br>
+                    Invitez les membres de votre famille à créer un compte, puis postez des nouvelles en utilisant le bouton "Ajouter des nouvelles" en haut a droite.<br><br>
+                    <em>Ce message disparaitra dès que vous aurez publié un premier contenu.</em>
+                </p>
+            </div>
+            
+            <div class="span6">
+                <ul class="thumbnails">
+                    <li class="span3">
+                        <a href="/css/pictures/port.jpeg" class="fancybox" rel="fancybox[1]">
+                             <img src="css/pictures/port.jpeg" class="img-polaroid"/>
+                        </a>
+                    </li>
+                    <li class="span3">
+                        <a href="/css/pictures/falaises.jpeg" class="fancybox" rel="fancybox[1]">
+                             <img src="css/pictures/falaises.jpeg" class="img-polaroid"/>
+                        </a>
+                    </li>
+                 </ul>
+            </div>
+        </div>
+
+            
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+       
+        $(document).ready(function(){
+            
+            //init fancybox on all pictures
+            $(".fancybox").fancybox({
+                loop: false,
+                openEffect: 'fade',
+                closeEffect: 'fade',
+                nextEffect: 'none',
+                prevEffect:'none',
+                nextClick: true,
+            });
+                
+        });
+    </script>
+{% endblock %}

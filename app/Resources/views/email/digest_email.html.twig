@@ -1,0 +1,50 @@
+{% extends 'email/base.html.twig' %}
+
+{% block email_content %}
+
+    <table cellpadding="0" cellspacing="0" border="0" align="center">
+        <tr>
+            <td width="900" valign="top"><h3>Voici la liste des contributions de la semaine sur votre mini-net:<h3></td>
+        </tr>
+    </table>
+    <br>
+    <table cellpadding="0" cellspacing="0" border="0" align="center">
+    <tr><td colspan="4"><hr></td></tr>
+    {% for post in post_list %}
+        {% set age = post.ageInDays %}
+        {% if age == 0 %}
+            {% set niceDate = "Aujourd'hui" %}
+        {% elseif age == 1%}
+            {% set niceDate = 'Hier' %}
+        {% elseif age == 2 %}
+            {% set niceDate = 'Avant-hier' %}
+        {% elseif age <=7 %}
+            {% set niceDate = (post.date | localeDate('medium','none',null,'EEEE'))~' dernier' %}
+        {% else %}
+            {% set niceDate = post.date | localeDate('medium','none',null,'EEEE d MMMM') %}
+        {% endif %}
+        <tr>
+            <td width="250" valign="top">{{niceDate}}, de <b>{{post.author.username}}</b>:</td>
+            <td width="300" valign="top">{{ post.contentPreview }}</td>
+            <td width="250" valign="top">
+                {% if post.hasComments %}+ {{post.comments |length }} commentaire{% if post.comments | length > 1 %}s{%endif%}{% endif %}
+                {% if post.hasImages   %}+ {{post.images |length }} photo{% if post.images | length > 1 %}s{%endif%} {% endif %}
+                {% if post.hasVideos   %}+ {{post.videos |length }} vidéo{% if post.videos | length > 1 %}s{%endif%} {% endif %}
+            </td>
+            <td width="100" valign="top"><a href="{{ url('view_post',{'id': post.id }) }}">Lire</a></td>
+        </tr>
+        <tr><td colspan="4"><hr></td></tr>
+    {% endfor %}
+    </table>
+    <br>
+    <table cellpadding="0" cellspacing="0" border="0" align="center">
+        <tr>
+            <td width="900" valign="top">Tout le contenu sur <a href="{{ url('home') }}">{{ url('home') }}</a></td>
+        </tr>
+    </table>
+    
+{% endblock %}
+
+
+
+

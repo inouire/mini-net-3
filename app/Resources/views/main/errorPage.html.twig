@@ -1,0 +1,48 @@
+{% extends 'app.html.twig' %}
+
+
+{% block body %}
+
+    {% include 'default/blankBlock.html.twig' %}
+            
+    <div class="row">
+        <center>
+        
+            {% if error_level is defined and error_level == 'bang' %}
+                <img src="{{asset('css/icons/bang.png')}}"/>
+            {% else %}
+                <img src="{{asset('css/icons/about.png')}}"/>
+            {% endif %}
+            
+            <div>
+              <h1>
+                {{ error_title }}<br>
+                <small>{{ error_message }}</small>
+              </h1>
+            </div>
+            <br>
+            
+            {% if follow_link is defined %}
+                <a href="{{ follow_link }}" class="btn btn-inverse">
+                {% if follow_link_text is defined %}
+                    {{ follow_link_text }} »
+                {% else %}
+                    Continuer »
+                {% endif %}
+                </a>
+            {% endif %}
+        
+        </center>
+    </div>
+    
+    {% include 'default/blankBlock.html.twig' %}
+
+{% endblock %}
+
+
+{% block footer %}
+    
+    <div class="big-blank-block visible-desktop"></div>
+    {{ parent() }}
+    
+{% endblock %}

@@ -1,0 +1,177 @@
+{% extends 'app.html.twig' %}
+
+{% block title %}archives pour {{requested_date | localeDate('medium','none',null,'MMMM')}} {{ requested_year }}{% endblock %}
+
+{% block body %}
+    
+    {% if share_selection is defined and share_selection %}
+    <div class="alert alert-success pull-center" style="text-align:center">
+        Naviguez dans les archives et sélectionnez le post dont vous voulez partager les pièces jointes avec l'icone <i class="icon-share"></i>.
+    </div>
+    {% endif %}
+    
+    <center><h1>{{ requested_year }}</h1></center>
+    
+    {% include 'default/monthsOfYearRibbon.html.twig' %}
+    
+    {% set new_day='yes' %}
+     
+    {% for post in post_list %}
+    
+        {% if current_datestamp is defined %}
+            {% if post.date | date('Ymd') != current_datestamp %}
+                <hr> 
+                {% set new_day='yes' %}
+            {% else %}
+                {% set new_day='no' %}
+            {% endif %}
+        {% endif %}
+        {% set current_datestamp = post.date | date('Ymd') %}
+        
+        {% include 'post/onePost.html.twig' %}
+        
+    {% endfor %}
+        
+    {% if post_list | length > 2 %}
+        {% include 'default/monthsOfYearRibbon.html.twig' %}
+    {% endif %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+       
+        $(document).ready(function(){
+            
+            //init fancybox on all pictures
+            $(".fancybox").fancybox({
+                loop: true,
+                openEffect: 'fade',
+                closeEffect: 'fade',
+                nextEffect: 'none',
+                prevEffect:'none',
+                nextClick: true,
+            });
+                
+            function deleteCommentListener(e){
+                e.preventDefault();
+                var comment_id = e.target.id;
+                console.log("Id du bouton de delete source de l'event:"+e.target.id);
+                var comment_to_delete = document.getElementById('comment-'+comment_id);
+                if(confirm("Êtes vous sur de vouloir supprimer ce commentaire ?")){
+                    $('#comment-'+comment_id).fadeOut(250);
+                    //comment_to_delete.parentNode.removeChild(comment_to_delete);
+                    console.log("Making DELETE request for comment "+comment_id);
+                    $.ajax({
+                       url : '/comment/'+comment_id,
+                       type : 'DELETE',
+                       //dataType: 'json',
+                       success : function(code_html, statut){
+                           console.log("Axaj call has been a success");
+                           console.log("data:"+code_html);
+                        }
+                    });
+                }
+            }
+            
+            function commentListener(e){
+                e.preventDefault();
+                var post_id = e.target.id;
+                var comment_form = document.getElementById('comment-form-'+post_id);
+                var comment_input = document.getElementById('comment-input-'+post_id);
+                var comment_content = comment_input.value;
+                
+                console.log("Contenu de l'input:"+comment_content);
+                
+                if(e.target.innerHTML=="Commenter"){
+                    $('#comment-block-'+post_id).fadeIn(100);
+                    e.target.innerHTML="Envoyer »";
+                    comment_input.focus();
+                }else{
+                    $('#comment-block-'+post_id).fadeOut(100);
+                    if(comment_content.length == 0){
+                        e.target.innerHTML="Commenter";
+                    }else{
+                        $('#comment-wheel-'+post_id).fadeIn(100);
+                        var current_form = document.getElementById('comment-form-'+post_id);
+                        console.log("Making POST request");
+                        $.post(
+                           '/comment',
+                           { post_id: post_id, comment: comment_content },
+                           function(data, statut){
+                                if(statut=="success"){
+                                    console.log("Axaj call has been a success");
+                                    console.log(data); 
+                                    var comments = document.getElementById('comments-'+post_id);
+                                    if(data.is_author_of_post == 1){
+                                        var tag = 'alert-success author-comment';
+                                    }else{
+                                        var tag = 'alert-info';
+                                    }
+                                    comments.innerHTML += '<div class=\"alert '+tag+' very-close\" id=\"comment-'+data.comment.id+'\" style=\"display:none\"><strong>{{app.user.username}}: </strong>'+data.comment.content+'<button class=\"close delete-comment\" id=\"'+data.comment.id+'\">&times;</button></div>';
+                                    var comment = document.getElementById('comment-'+data.comment.id);
+                                    e.target.innerHTML="Commenter";
+                                    $('#comment-'+data.comment.id).fadeIn(100);
+                                    $('#comment-wheel-'+post_id).fadeOut(100);
+                                    comment.addEventListener('click', deleteCommentListener, false);
+                                    //add update listener
+                                }
+                                
+                           },'json'
+                        );
+                        current_form.reset();
+                    }
+                }
+            }
+            
+            function updateComment(comment_id,comment_content){
+                console.log("Making POST request to update comment");
+                $.post(
+                   '/comment/'+comment_id,
+                   { comment: comment_content },
+                   function(data, statut){
+                        if(statut=="success"){
+                            $('#comment-content-'+comment_id).html(comment_content);
+                            console.log("Axaj call has been a success");
+                            console.log(data); 
+                        }
+                        
+                   },'json'
+                );
+            }
+            
+            //adding listener on all comment buttons
+            $(".comment-button").click( function (event) {
+                commentListener(event);
+            });
+            
+            //adding listener on all delete comment buttons
+            $(".delete-comment").click( function (event) {
+                deleteCommentListener(event);
+            });
+            
+            $(".edit-comment").click( function (event) {
+                var comment_id = event.target.getAttribute("value");
+                $('#edit-comment-'+comment_id).fadeOut(100);
+                $('#comment-content-'+comment_id).fadeOut(100);
+                $('#comment-edit-block-'+comment_id).fadeIn(100);
+                $('#update-comment-'+comment_id).fadeIn(100);
+            });
+            $(".update-comment").click( function (event) {
+                var comment_id = event.target.getAttribute("value");
+                var comment_content = $('#comment-edit-area-'+comment_id).val();
+                $('#comment-edit-block-'+comment_id).fadeOut(100);
+                $('#update-comment-'+comment_id).fadeOut(100);
+                
+                //update content
+                updateComment(comment_id,comment_content);
+                
+                $('#edit-comment-'+comment_id).fadeIn(100);
+                $('#comment-content-'+comment_id).fadeIn(100);
+                
+            });
+
+        });
+    </script>
+{% endblock %}

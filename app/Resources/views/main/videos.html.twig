@@ -1,0 +1,33 @@
+{% extends 'app.html.twig' %}
+
+{% block title %}toutes les vidéos{% endblock %}
+
+{% block body %}
+
+    <h1 style="text-align:center">Toutes les vidéos</h1>
+
+    <div class="row">
+        
+        <div class="span12">
+            <ul class="thumbnails">   
+
+{% for video in video_list %}
+{% set post_date = video.post.date | localeDate('medium','none',null,'d MMMM YYYY') %}
+
+                <li class="span2" style="text-align:center">
+                    <a href="{{ path('get_video',{"id":video.id}) }}"">
+                        <img src="{{ path('get_video_thumbnail',{"id":video.id}) }}" class="img-polaroid" />
+                    </a>
+                    <a href="{{ path('view_post',{"id":video.post.id}) }}"">
+                        {{post_date}}
+                    </a>
+                    
+                </li>
+{% endfor %}
+            
+            </ul>
+        </div>
+   </div>
+   
+{% endblock %}
+

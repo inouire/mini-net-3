@@ -1,0 +1,53 @@
+{% extends 'app.html.twig' %}
+
+{% block title %}albums pour l'année {{ requested_year }}{% endblock %}
+
+{% block body %}
+
+    <h1 style="text-align:center">{{ requested_year }}</h1>
+
+    {% include 'default/monthsOfYearRibbon.html.twig' %}
+
+    <div class="row">
+        
+        <div class="span12">
+            <ul class="thumbnails">   
+
+{% for image in image_list %}
+                <li class="span2" style="text-align:center">
+                    <a href="{{ path('get_image',{"id":image.id}) }}" class="fancybox" rel="fancybox[{{requested_year}}]">
+                         <img src="{{ path('get_thumbnail',{"id":image.id}) }}" class="img-polaroid" />
+                    </a>
+                </li>
+{% endfor %}
+            
+            </ul>
+        </div>
+   </div>
+   
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            
+            //init fancybox on all pictures, with thumb
+            $(".fancybox").fancybox({
+                loop: false,
+                openEffect: 'fade',
+                closeEffect: 'fade',
+                nextEffect: 'none',
+                prevEffect:'none',
+                nextClick: true,
+                helpers:  {
+                    thumbs : {
+                        width: 50,
+                        height: 50
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}

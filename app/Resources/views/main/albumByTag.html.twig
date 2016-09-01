@@ -1,0 +1,58 @@
+{% extends 'app.html.twig' %}
+
+{% block title %}album pour le tag {{tag}}{% endblock %}
+
+{% block body %}
+
+    {% include 'default/tagsRibbon.html.twig' %}
+    
+    <hr>
+    <h1 style="text-align:center">Album "{{tag}}"</h1>
+    <hr>
+    <div class="row">
+        
+        <div class="span12">
+            <ul class="thumbnails">   
+
+{% for image in image_list %}
+{% set post_date = image.post.date | localeDate('medium','none',null,'dd/MM/YY') %}
+                <li class="span2" style="text-align:center">
+                    <a href="{{ path('get_image',{"id":image.id}) }}" class="fancybox" rel="fancybox[{{tag}}]">
+                         <img src="{{ path('get_thumbnail',{"id":image.id}) }}" class="img-polaroid" />
+                    </a>
+                    <a href="{{ path('view_post',{"id":image.post.id}) }}">
+                        {{post_date}}
+                    </a>
+                </li>
+{% endfor %}
+            
+            </ul>
+        </div>
+   </div>
+   
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            
+            //init fancybox on all pictures, with thumb
+            $(".fancybox").fancybox({
+                loop: false,
+                openEffect: 'fade',
+                closeEffect: 'fade',
+                nextEffect: 'none',
+                prevEffect:'none',
+                nextClick: true,
+                helpers:  {
+                    thumbs : {
+                        width: 50,
+                        height: 50
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}

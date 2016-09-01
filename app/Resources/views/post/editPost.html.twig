@@ -1,0 +1,277 @@
+{% extends 'app.html.twig' %}
+
+{% block title %}édition de post{% endblock %}
+
+{% block body %}
+
+    {% include 'default/blankBlock.html.twig' %}
+    
+    <div class="row post-editor" id={{post.id}}>
+            
+        <form method="post" action="{{ path('update_post') }}" id="{{ post.id }}" {{ form_enctype(post_form) }}>
+            
+            <div class="span2" style="text-align: center;">
+                {% if post.published %}
+                    <h4>{{ post.date | localeDate('medium','none',null,'dd MMMM Y') }}</h4>
+                    <span class="label label-success">publié</span>
+                {% else %}
+                    <h4>Aujourd'hui</h4>
+                    <span class="label label-warning">non publié</span>
+                {% endif %}
+                <br /><br />
+                <img id="loading-wheel" src="{{ asset('/css/icons/loading.gif')}}" style="display: none"/>
+            </div>
+            
+            <div class="span9">
+            
+                {{ form_errors(post_form) }}
+                    
+                {% if post.published == true %}
+                    <button class="btn btn-danger pull-left" id="delete-button" name="submitButton" value="delete"><i class="icon-trash icon-white" id="delete-icon"></i> Supprimer</a></button>
+                    <button class="btn btn-success pull-right" id="update-button" type="submit" name="submitButton" value="update"><i class="icon-download icon-white" id="publish-icon"></i> Mettre à jour</button>
+                {% else %}
+                    <button class="btn" id="save-button" type="submit" name="submitButton" value="save"><i class="icon-download" id="save-icon"></i> 
+                        <span class="hidden-phone">Garder comme brouillon</span>
+                        <span class="visible-phone">Sauver</span>
+                    </button>
+                    <button class="btn btn-success pull-right" id="publish-button" type="submit" name="submitButton" value="publish"><i class="icon-download icon-white" id="publish-icon"></i> Publier</button>
+                {% endif %}
+                    
+                    <br /><br />
+                    {{ form_widget(
+                        post_form.content, {'attr': {'style':'width:100%','rows':'10'} })
+                    }}
+
+            </div>
+
+            <div class="span4 offset4">
+                <div class="btn btn-primary" id="add-image-button" ><i class="icon-picture icon-white"></i> Ajouter une photo</div>
+                <div id="add-image-block" style="display: none">
+                    {{ form_errors(post_form.file) }}
+                    {{ form_widget(post_form.file, {'attr': {'class':'add-image-input'} }) }}
+                    <br>
+                    <button class="btn btn-primary" id="upload-image-button" type="submit" name="submitButton" value="upload"><i class="icon-picture icon-white"></i> Ajouter cette photo</button>
+                </div>
+            </div>
+            <div class="span4">
+                <div class="btn btn-info" id="add-video-button" ><i class="icon-camera icon-white"></i> Ajouter une vidéo</div>
+                <div id="add-video-block" style="display: none">
+                    {{ form_errors(post_form.video) }}
+                    {{ form_widget(post_form.video, {'attr': {'class':'add-video-input'} }) }}
+                    <br>
+                    <button class="btn btn-info" id="upload-video-button" type="submit" name="submitButton" value="upload"><i class="icon-camera icon-white"></i> Ajouter cette vidéo</button>
+                </div>
+                <br><br>
+            </div>
+
+            {{ form_rest(post_form) }}
+        </form>
+    </div>
+    {% if post.hasImages %}
+    <div class="row">
+        <div class="span9 offset2">
+            <ul class="thumbnails">
+                {% for image in post.images %}
+                <li class="span3" id="image-{{image.id}}">
+                    <div>
+                        <a href="{{path('rotate_image',{'id':image.id,'direction':'counter-clockwise'})}}"><img src="{{asset('css/icons/rotate-ccw.png')}}"/></a>
+                        <a href="{{path('rotate_image',{'id':image.id,'direction':'clockwise'})}}" class="pull-right"><img src="{{asset('css/icons/rotate-cw.png')}}"/></a>
+                        <a href="{{ path('get_image',{'id':image.id, 'rand': random()}) }}" class="fancybox" rel="album[{{post.id}}]">
+                            {% if image.id == image_to_reload %}
+                               <img src="{{ path('get_thumbnail',{'id':image.id, 'rand': random()}) }}" class="img-polaroid"/>
+                            {% else %}
+                                <img src="{{ path('get_thumbnail',{'id':image.id}) }}" class="img-polaroid"/>
+                            {% endif %}
+                        </a>
+                    
+                        {% for tag in image.tags %}
+                            <span class="label">
+                            {{tag.name}}
+                            <a href="{{ path('untag_image',{'id':image.id,'tag_id':tag.id})}}">&times;</a>
+                            </span>
+                        {% endfor %}
+                        <div class="btn-group ">
+                            <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
+                            Ajouter tag
+                            <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                {% for tag in all_tags %}
+                                <li><a href="{{path('tag_image',{'id':image.id,'tag_id':tag.id})}}">{{tag.name}}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <i class="icon-trash delete-image-button pull-right" id="{{image.id}}"></i>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if post.hasVideos %}
+    <div class="row">
+        <div class="span9 offset2">
+            <ul class="thumbnails">
+            
+            {% for video in post.videos %}
+            <li class="span3" id="video-{{video.id}}">
+                <div>
+                    <a href="{{ path('get_video',{"id":video.id}) }}">
+                         <img src="{{ path('get_video_thumbnail',{"id":video.id}) }}" class="img-polaroid"/>
+                    </a>
+                </div>
+                <i class="icon-trash delete-video-button pull-right" id="{{video.id}}"></i>
+            </li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+                
+    {% include 'default/blankBlock.html.twig' %}
+    
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        jQuery(document).ready(function(){
+            
+            function disableAllControls(){
+                $('#delete-button').addClass('disabled');
+                $('#publish-button').addClass('disabled');
+                $('#save-button').addClass('disabled');
+                $('#update-button').addClass('disabled');
+                $('#add-image-button').addClass('disabled');
+                $('#upload-image-button').addClass('disabled');
+                $('#upload-video-button').addClass('disabled');
+                $('#loading-wheel').fadeIn(100);
+            }
+            
+            function enableAllControls(){
+                $('#delete-button').removeClass('disabled');
+                $('#publish-button').removeClass('disabled');
+                $('#save-button').removeClass('disabled');
+                $('#add-image-button').removeClass('disabled');
+                $('#upload-image-button').removeClass('disabled');
+                $('#upload-video-button').removeClass('disabled');
+                $('#loading-wheel').fadeOut(100);
+            }
+  
+            function deleteImageAjax(image_id){
+                console.log("ACTION: delete image "+image_id);
+                if(confirm("Êtes vous sur de vouloir supprimer cette photo ?")){
+                    $.ajax({
+                        url : '/image/'+image_id+'.jpg',
+                        type : 'DELETE',
+                        dataType : 'json',
+                        success : function(data, statut){
+                            console.log("Axaj call has been a success");
+                            console.log(data);
+                            $('#image-'+image_id).fadeOut(400);
+                        },
+                        error : function(data, statut, error){
+                            console.log("Error during ajax call");
+                        }
+                    });
+                }
+            }
+            
+            function deleteVideoAjax(video_id){
+                console.log("ACTION: delete video "+video_id);
+                if(confirm("Êtes vous sur de vouloir supprimer cette vidéo ?")){
+                    $.ajax({
+                        url : '/video/'+video_id,
+                        type : 'DELETE',
+                        dataType : 'json',
+                        success : function(data, statut){
+                            console.log("Axaj call has been a success");
+                            console.log(data);
+                            $('#video-'+video_id).fadeOut(400);
+                        },
+                        error : function(data, statut, error){
+                            console.log("Error during ajax call");
+                        }
+                    });
+                }
+            }
+            
+            //adding listener on "delete post" button to display a warning
+            var deleteActionLocked = true;
+            $('#delete-button').click( function (event) {
+                if(deleteActionLocked == true){
+                    event.preventDefault();
+                    if(confirm("Êtes vous sur de vouloir supprimer définitivement cet article ?\n(les commentaires ainsi que les photos attachées seront perdus)")){
+                        deleteActionLocked = false;
+                        $('#delete-button').click(); 
+                        disableAllControls();
+                    }
+                }
+            });
+
+            //adding listener on "add image" button
+            $("#add-image-button").click( function (event) {
+                $('#add-image-block').fadeIn(400);
+                $('#add-image-button').fadeOut(400);
+                $('.add-image-input').click();
+            });
+
+            //adding listener on "add video" button
+            $("#add-video-button").click( function (event) {
+                $('#add-video-block').fadeIn(400);
+                $('#add-video-button').fadeOut(400);
+                $('.add-video-input').click();
+            });
+            
+            //adding listeners on "delete image" icons
+            $(".delete-image-button").click( function (event) {
+                var image_id = event.target.id;
+                deleteImageAjax(image_id);
+            });
+            
+            //adding listeners on "delete video" icons
+            $(".delete-video-button").click( function (event) {
+                var video_id = event.target.id;
+                deleteVideoAjax(video_id);
+            });
+            
+            //adding listener on all out links
+            /*$("a").click( function (event) {
+                event.preventDefault();
+                requestedLink = $(this).attr('href');
+                updatePostAjax(0,redirect_to_path(requestedLink));
+            });*/
+            
+            $("#publish-button").click( function (event) {
+                disableAllControls();
+            });
+            $("#save-button").click( function (event) {
+                disableAllControls();
+            });
+            $("#update-button").click( function (event) {
+                disableAllControls();
+            });
+            $("#upload-image-button").click( function (event) {
+                disableAllControls();
+            });
+            $("#upload-video-button").click( function (event) {
+                disableAllControls();
+            });
+
+            //init fancybox on all pictures
+            $(".fancybox").fancybox({
+                loop: true,
+                openEffect: 'fade',
+                closeEffect: 'fade',
+                nextEffect: 'none',
+                prevEffect:'none',
+                nextClick: true,
+            });
+            
+        });
+    </script>
+{% endblock %}
+

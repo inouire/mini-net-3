@@ -1,0 +1,78 @@
+{% extends 'app.html.twig' %}
+
+
+{% block body %}
+    
+    <div class="row">
+        <center>
+            <div>
+              <h2>
+                {{ sharelink.author.username}} a souhaité partager {%if sharelink.post.totalAttachedFiles > 1%}des fichiers{%else%}un fichier{%endif%} avec vous<br>
+                <small>Attention, ce lien expirera le {{sharelink.expirationDate | localeDate('medium','none',null,'d MMMM YYYY')}} (dans {{sharelink.getExpirationDays + 1}} jours) </small>
+              </h2>
+            </div>
+            <br>
+        
+            {% if sharelink.post.totalAttachedFiles == 1 %}
+                {% set offset = 'span 8 offset4' %}
+            {% elseif sharelink.post.totalAttachedFiles == 2 %}
+                {% set offset = 'span10 offset2' %}
+            {% else %}
+                {% set offset = 'span12' %}
+            {% endif %}
+            
+            <div class="{{offset}}" style="text-align:center">
+                <ul class="thumbnails">
+                
+                    {% for video in sharelink.post.videos %}
+                    <li class="span4">
+                        <a href="{{ path('get_sharelink_video',{'token': sharelink.token,'id':video.id}) }}">
+                             <img src="{{ path('get_sharelink_video_thumbnail',{'token': sharelink.token,'id':video.id}) }}" class="img-polaroid"/>
+                        </a>
+                    </li>
+                    {% endfor %}
+                
+                    {% for image in sharelink.post.images %}
+                    <li class="span4">
+                        <a href="{{ path('get_sharelink_image',{'token': sharelink.token, 'id':image.id}) }}" class="fancybox" rel="album[{{sharelink.post.id}}]">
+                             <img src="{{ path('get_sharelink_thumbnail',{'token': sharelink.token,'id':image.id}) }}" class="img-polaroid"/>
+                        </a>
+                    </li>
+                    {% endfor %}
+                    
+                </ul>
+            </div>
+        
+        </center>
+    </div>
+    
+    {% include 'default/blankBlock.html.twig' %}
+
+{% endblock %}
+
+
+{% block footer %}
+    
+    <div class="big-blank-block visible-desktop"></div>
+    {{ parent() }}
+    
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+       
+    <script type="text/javascript">
+       
+        $(document).ready(function(){
+            //init fancybox on all pictures
+            $(".fancybox").fancybox({
+                loop: true,
+                openEffect: 'fade',
+                closeEffect: 'fade',
+                nextEffect: 'none',
+                prevEffect:'none',
+                nextClick: true,
+            });
+        });
+    </script>
+{% endblock %}

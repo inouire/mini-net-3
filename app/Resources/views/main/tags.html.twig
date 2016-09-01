@@ -1,0 +1,14 @@
+{% extends 'app.html.twig' %}
+
+{% block title %} tous les tags disponibles{% endblock %}
+
+{% block body %}
+
+    {% if is_granted("ROLE_ADMIN")%}<a href="{{ path('admin_tags')}}" class="pull-right btn btn-mini admin">Gérer</a><br><br>{% endif %}
+
+    {% include 'default/tagsRibbon.html.twig' %}
+    
+    {% include 'default/blankBlock.html.twig' %}
+    {% include 'default/blankBlock.html.twig' %}
+
+{% endblock %}

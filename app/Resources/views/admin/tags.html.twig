@@ -1,0 +1,25 @@
+{% extends 'app.html.twig' %}
+
+{% block title %} gestion des tags{% endblock %}
+
+{% block body %}
+        
+    <center><h2 class="admin">Gestion des tags</h2></center>
+    
+    <br>
+        
+    <form class="form-search" style="text-align:center" method="POST">
+        {{ form_widget(form.name, {'attr': {'class':'input-medium search-query','style':'font-size:1.3em'} }) }}
+        {{ form_widget(form.add, {'attr': {'class':'btn btn-primary'} }) }}
+        <!--<input class="btn btn-inverse" type="submit" value="{{ 'registration.submit'|trans }}" />-->
+        {{ form_end(form) }}
+    </form>
+    
+    <br>
+    
+    {% include 'default/tagsRibbon.html.twig' %}
+    
+    {% include 'default/blankBlock.html.twig' %}
+    {% include 'default/blankBlock.html.twig' %}
+
+{% endblock %}
