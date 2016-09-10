@@ -52,7 +52,7 @@ class DefaultController extends Controller
         if(count($post_list)==0){
             return $this->render('empty/emptyHome.html.twig');
         }else{
-            return $this->render('AppBundle:Main:home.html.twig',array(
+            return $this->render('main/home.html.twig',array(
                 'post_list'=> $post_list,
                 'post_secondary_list' => $post_secondary_list,
                 'current_bonus' => $more
