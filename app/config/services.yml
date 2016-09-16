@@ -1,7 +1,11 @@
 # Learn more about services, parameters and containers at
 # http://symfony.com/doc/current/book/service_container.html
 parameters:
-#    parameter_name: value
+    inouire_mininet.attachment_locator.class: AppBundle\Service\AttachmentLocator
+    inouire_mininet.thumbnailer.class: AppBundle\Service\Thumbnailer
+    inouire_mininet.image_resize.class: AppBundle\Service\ImageResize
+    inouire_mininet.image_upload.class: AppBundle\Service\ImageUpload
+    inouire_mininet.sharelink_checker.class: AppBundle\Service\ShareLinkChecker
 
 services:
 #    service_name:
@@ -32,3 +36,33 @@ services:
     inouire.invitation.form.data_transformer:
         class: AppBundle\Form\DataTransformer\InvitationToCodeTransformer
         arguments: ["@doctrine.orm.entity_manager"]
+
+    inouire.attachment_locator:
+        class: "%inouire_mininet.attachment_locator.class%"
+        arguments:
+            - "%images_path%"
+            - "%videos_path%"
+        
+    inouire.thumbnailer:
+        class: "%inouire_mininet.thumbnailer.class%"
+        arguments: 
+            - "@doctrine.orm.entity_manager"
+            - "@inouire.attachment_locator"
+            
+    inouire.image_resize:
+        class: "%inouire_mininet.image_resize.class%"
+        arguments:
+            - "@inouire.attachment_locator"
+        
+    inouire.image_upload:
+        class: "%inouire_mininet.image_upload.class%"
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@inouire.image_resize"
+            - "@inouire.thumbnailer"
+            - "@inouire.attachment_locator"
+            
+    inouire.sharelink_checker:
+        class: "%inouire_mininet.sharelink_checker.class%"
+        arguments:
+            - "@doctrine.orm.entity_manager"

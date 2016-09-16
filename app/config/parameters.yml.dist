@@ -17,3 +17,8 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    mininet_name: 'Famille test'
+    mininet_admin_email: test@email.net
+    images_path: '%kernel.root_dir%/../web/img'
+    videos_path: '%kernel.root_dir%/../web/vid'
