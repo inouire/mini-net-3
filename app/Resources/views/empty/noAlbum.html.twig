@@ -7,7 +7,7 @@
     {% set current_year = ("now" |date("Y")) %}
     {% set current_month = ("now" |date("m")) %}
     
-    {% set title='Aucune photo publiée en '~(requested_date | localeDate('medium','none',null,'MMMM YYYY'))  %}
+    {% set title='Aucune photo publiée en '~(requested_date | localizeddate('medium','none','null', null,'MMMM YYYY'))  %}
     {% set message='Désolé.' %}
     {% set link=path('albums') %}
     {% set link_message='Aller à l\'album du mois en cours'%}
@@ -19,15 +19,15 @@
             {% set link_message='Ajouter des nouvelles' %}
             {% set link= path('new_post') %}
         {% elseif current_month > requested_month %}
-            {% set title = 'Aucune photo publiée en '~ (requested_date | localeDate('medium','none',null,'MMMM')) ~ '.' %}
+            {% set title = 'Aucune photo publiée en '~ (requested_date | localizeddate('medium','none','null', null,'MMMM')) ~ '.' %}
         {% elseif current_month < requested_month %}
-            {% set title = 'Aucune photo publiée en '~ (requested_date | localeDate('medium','none',null,'MMMM')) ~ '.' %}
+            {% set title = 'Aucune photo publiée en '~ (requested_date | localizeddate('medium','none','null', null,'MMMM')) ~ '.' %}
             {% set message='Patience, nous n\'y sommes pas encore.' %}
         {% endif %}
     {% elseif current_year > requested_year %}
-        {% set title = 'Aucune photo publiée en '~ (requested_date | localeDate('medium','none',null,'MMMM YYYY')) ~ '.' %}
+        {% set title = 'Aucune photo publiée en '~ (requested_date | localizeddate('medium','none','null', null,'MMMM YYYY')) ~ '.' %}
     {% elseif current_year < requested_year %}
-        {% set title = 'Aucune photo publiée en '~ (requested_date | localeDate('medium','none',null,'MMMM YYYY')) ~ '.' %}
+        {% set title = 'Aucune photo publiée en '~ (requested_date | localizeddate('medium','none','null', null,'MMMM YYYY')) ~ '.' %}
         {% set message='Patience, nous ne sommes qu\'en '~current_year~'.' %}
     {% endif %}     
         

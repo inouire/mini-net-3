@@ -1,6 +1,6 @@
 {% extends 'app.html.twig' %}
 
-{% block title %}archives pour {{requested_date | localeDate('medium','none',null,'MMMM')}} {{ requested_year }}{% endblock %}
+{% block title %}archives pour {{requested_date | localizeddate('medium','none','null',null,'MMMM')}} {{ requested_year }}{% endblock %}
 
 {% block body %}
     

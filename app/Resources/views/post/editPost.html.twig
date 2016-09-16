@@ -8,11 +8,11 @@
     
     <div class="row post-editor" id={{post.id}}>
             
-        <form method="post" action="{{ path('update_post') }}" id="{{ post.id }}" {{ form_enctype(post_form) }}>
+        <form method="post" action="{{ path('update_post') }}" id="{{ post.id }}" enctype="multipart/form-data">
             
             <div class="span2" style="text-align: center;">
                 {% if post.published %}
-                    <h4>{{ post.date | localeDate('medium','none',null,'dd MMMM Y') }}</h4>
+                    <h4>{{ post.date | localizeddate('long', 'none', 'null', null, 'dd MMMM Y') }}</h4>
                     <span class="label label-success">publié</span>
                 {% else %}
                     <h4>Aujourd'hui</h4>

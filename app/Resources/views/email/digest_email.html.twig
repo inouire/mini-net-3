@@ -19,9 +19,9 @@
         {% elseif age == 2 %}
             {% set niceDate = 'Avant-hier' %}
         {% elseif age <=7 %}
-            {% set niceDate = (post.date | localeDate('medium','none',null,'EEEE'))~' dernier' %}
+            {% set niceDate = (post.date | localizeddate('medium','none','null',null,'EEEE'))~' dernier' %}
         {% else %}
-            {% set niceDate = post.date | localeDate('medium','none',null,'EEEE d MMMM') %}
+            {% set niceDate = post.date | localizeddate('medium','none','null',null,'EEEE d MMMM') %}
         {% endif %}
         <tr>
             <td width="250" valign="top">{{niceDate}}, de <b>{{post.author.username}}</b>:</td>
