@@ -3,7 +3,10 @@
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Inouire\UserBundle\Entity\Invitation;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use AppBundle\Entity\Invitation;
 
 class InvitationController extends Controller
 {
@@ -16,8 +19,8 @@ class InvitationController extends Controller
         $em = $this->getDoctrine()->getManager();
         
         // get all invitations + all users
-        $invitation_repo = $em->getRepository('InouireUserBundle:Invitation');
-        $user_repo       = $em->getRepository('InouireUserBundle:User');   
+        $invitation_repo = $em->getRepository('AppBundle:Invitation');
+        $user_repo       = $em->getRepository('AppBundle:User');   
         $invitations = $invitation_repo->findAll();
         $users       = $user_repo->findAll();
         
@@ -29,7 +32,7 @@ class InvitationController extends Controller
         $form = $this->createSendInvitationForm($invitation);
         
         // render page
-        return $this->render('AppBundle:Admin:invitations.html.twig',array(
+        return $this->render('admin/invitations.html.twig',array(
             'invitations' => $list,
             'form' => $form->createView()
         ));
@@ -62,7 +65,7 @@ class InvitationController extends Controller
     /**
      * Send an invite to a specific email
      */
-    public function inviteAction()
+    public function inviteAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         
@@ -72,9 +75,9 @@ class InvitationController extends Controller
         
         
         // create invitation if it has not already been created for this email
-        $form->handleRequest($this->getRequest());
+        $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $existing_invite = $em->getRepository('InouireUserBundle:Invitation')->findOneByEmail($invitation->getEmail());
+            $existing_invite = $em->getRepository('AppBundle:Invitation')->findOneByEmail($invitation->getEmail());
             if (!$existing_invite) {
                 $em->persist($invitation);
                 $em->flush();
@@ -90,7 +93,7 @@ class InvitationController extends Controller
                 ->setTo($invitation->getEmail())
                 ->setBody(
                     $this->renderView(
-                        'AppBundle:Admin:invite_email.txt.twig',
+                        'admin/invite_email.txt.twig',
                         array(
                             'admin_name'   => $this->getUser()->getUsername(),
                             'register_url' => $this->generateUrl('fos_user_registration_register',array(),true),
@@ -112,8 +115,8 @@ class InvitationController extends Controller
         $form = $this->createFormBuilder($invitation)
                      ->setAction($this->generateUrl('admin_invite'))
                      ->setMethod('POST')
-                     ->add('email', 'email')
-                     ->add('send', 'submit', array('label' => 'Inviter'))
+                     ->add('email', EmailType::class)
+                     ->add('send', SubmitType::class, array('label' => 'Inviter'))
                      ->getForm();
         return $form;
     }

@@ -3,9 +3,12 @@
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Tag;
 use AppBundle\Entity\Image;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class TagController extends Controller
 {
@@ -42,7 +45,6 @@ class TagController extends Controller
         return $this->redirect($this->generateUrl('edit_post',array(
             'id' => $image->getPost()->getId()
         ))); 
-        
     }
     
     /**
@@ -68,19 +70,19 @@ class TagController extends Controller
     /**
      * View the list of available tags
      */
-    public function adminListAction(){
+    public function adminListAction(Request $request){
         
         $em = $this->getDoctrine()->getManager();
         
-        // build add tag form
+        // build form
         $tag = new Tag();
         $form = $this->createFormBuilder($tag)
-            ->add('name', 'text')
-            ->add('add', 'submit', array('label' => 'Ajouter'))
+            ->add('name', TextType::class)
+            ->add('add', SubmitType::class, array('label' => 'Ajouter'))
             ->getForm();
         
         // use form data if the form has been submitted
-        $form->handleRequest($this->getRequest());
+        $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($tag);
             $em->flush();
@@ -91,7 +93,7 @@ class TagController extends Controller
         $tags = $tag_repo->findAll();
         
         // render tags list + form
-        return $this->render('AppBundle:Admin:tags.html.twig',array(
+        return $this->render('admin/tags.html.twig',array(
             'tags' => $tags,
             'form' => $form->createView()
         ));
