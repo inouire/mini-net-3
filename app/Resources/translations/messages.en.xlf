@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<!--
+ Loco xml export: XLIFF for Symfony
+ Project: mini-net
+ Release: Working copy
+ Locale: en, English
+ Exported by: Edouard
+ Exported at: Fri, 23 Sep 2016 22:22:44 +0100 
+-->
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file source-language="en" target-language="en" tool-id="loco" datatype="plaintext" original="file.ext">
+        <header>
+          <tool tool-id="loco" tool-name="Loco for Symfony" tool-version="1.0.14 20160915-1" tool-company="Loco" />
+        </header>
+        <body> 
+            <trans-unit id="loco:57e5819a14d725aa538b4568">
+                <source>Top-bar-Home</source>
+                <target>Home</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57e581d214d72592538b4568">
+                <source>Top-bar-Albums</source>
+                <target>Albums</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57e581f914d72592538b456a">
+                <source>Top-bar-Tags</source>
+                <target>Tags</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57e5821a14d7250d548b4567">
+                <source>Top-bar-Videos</source>
+                <target>Videos</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57e5826914d7256b578b456c">
+                <source>Top-bar-Archives</source>
+                <target>Archives</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57e59a1c14d72590668b4569">
+                <source>the-most-simple-social-network-for-your-family</source>
+                <target>the most simple social network for your family</target> 
+            </trans-unit> 
+        </body>
+    </file>
+</xliff>
