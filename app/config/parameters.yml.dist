@@ -10,6 +10,8 @@ parameters:
     images_path: '%kernel.root_dir%/../data/img'
     videos_path: '%kernel.root_dir%/../data/vid'
 
+    locale: fr
+    
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
     mailer_user:       ~
