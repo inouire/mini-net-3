@@ -1,27 +1,19 @@
 <!DOCTYPE html>
 <html>
-
     <head>
-    
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        
-        <title>
-            Mini-net : {% block title %}le réseau social familial{% endblock %}
-        </title>
-        
+        <title>Mini-net : {% block title %}{{ 'the-family-social-network' | trans }}{% endblock %}</title>
     {% block stylesheets %}
         <link href="{{ asset('bootstrap2/css/bootstrap.css') }}" rel="stylesheet">
         <link href="{{ asset('bootstrap2/css/bootstrap-responsive.css') }}" rel="stylesheet">          
         <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
         <link href="{{ asset('fancybox/jquery.fancybox.css?v=2.1.5') }}" rel="stylesheet" type="text/css" media="screen" />
         <link href="{{ asset('fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7') }}" rel="stylesheet" type="text/css" />
-    
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
     {% endblock %}
-    
     </head>
     
 {% set currentPath = app.request.attributes.get('_route') %}
@@ -33,61 +25,67 @@
     
     <body class="{{bodyClass}}">
     
-    <!-- offset for navbar -->
-    <div class="hidden-phone hidden-tablet" style="padding-top:70px"></div>
+        <!-- offset for navbar -->
+        <div class="hidden-phone hidden-tablet" style="padding-top:70px"></div>
     
     {% block header %}
     
-    <!-- navbar -->    
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-    
-          <a class="brand" href="{{ path('home') }}">Mini-net</a>
-          
-        {% if app.user and is_granted("IS_AUTHENTICATED_REMEMBERED")%}
-    
-          <div class="nav-collapse collapse">
-            <ul class="nav">
-                <li class="{% if currentPath == 'home' %}active{% endif %}"><a href="{{ path('home') }}"><i class="icon-home icon-white"></i> {{'Top-bar-Home' | trans}}</a></li>
-                <li class="{% if currentPath == 'album' %}active{% endif %}"><a href="{{ path('albums') }}"><i class="icon-camera icon-white"></i> {{'Top-bar-Albums' | trans}}</a></li>
-                <li class="{% if currentPath == 'tag_list' or currentPath == 'tag_album' %}active{% endif %}"><a href="{{ path('tag_list') }}"><i class="icon-tags icon-white"></i> {{'Top-bar-Tags' | trans}}</a></li>
-                <li class="{% if currentPath == 'videos' %}active{% endif %}"><a href="{{ path('videos') }}"><i class="icon-film icon-white"></i> {{'Top-bar-Videos' | trans}}</a></li>
-                <li class="{% if currentPath == 'posts' %}active{% endif %}"><a href="{{ path('archives') }}"><i class="icon-calendar icon-white"></i> {{'Top-bar-Archives' | trans}}</a></li>
-            </ul>
-
-            <form class="navbar-form pull-right">
-            
-                <a class="btn btn-success" href="{{ path('new_post') }}">
-                    Ajouter des nouvelles
-                </a>
-               
-                <div class="btn-group">
-                    <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="icon-user icon-white hidden-phone" id="user-logout-icon"></i> {{ app.user.username }}
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" style="text-align:right">
-                        <li><a href="{{ path('select_post_for_sharelink')}}">Partager des fichiers <i class="icon-share"></i></a></li> 
-                        {% if is_granted('ROLE_ADMIN') %}<li><a href="{{ path('admin_invitations')}}">Inviter des membres <i class="icon-plus"></i></a></li>{% endif %}
-                        <li><a href="{{ path('fos_user_profile_edit') }}">Modifier mon profil <i class="icon-user"></i></a></li> 
-                        <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter <i class="icon-off"></i></a></li>
+        <!-- navbar -->    
+        <div class="navbar navbar-inverse navbar-fixed-top">
+          <div class="navbar-inner">
+            <div class="container">
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+        
+                <a class="brand" href="{{ path('home') }}">Mini-net</a>
+              
+            {% if app.user and is_granted("IS_AUTHENTICATED_REMEMBERED")%}
+                <div class="nav-collapse collapse">
+                    <ul class="nav">
+                        <li class="{% if currentPath == 'home' %}active{% endif %}">
+                            <a href="{{ path('home') }}"><i class="icon-home icon-white"></i> {{ 'home' | trans | capitalize }}</a>
+                        </li>
+                        <li class="{% if currentPath == 'album' %}active{% endif %}">
+                            <a href="{{ path('albums') }}"><i class="icon-camera icon-white"></i> {{ 'albums' | trans | capitalize }}</a>
+                        </li>
+                        <li class="{% if currentPath == 'tag_list' or currentPath == 'tag_album' %}active{% endif %}">
+                            <a href="{{ path('tag_list') }}"><i class="icon-tags icon-white"></i> {{ 'tags' | trans | capitalize }}</a>
+                        </li>
+                        <li class="{% if currentPath == 'videos' %}active{% endif %}">
+                            <a href="{{ path('videos') }}"><i class="icon-film icon-white"></i> {{ 'videos' | trans | capitalize }}</a>
+                        </li>
+                        <li class="{% if currentPath == 'posts' %}active{% endif %}">
+                            <a href="{{ path('archives') }}"><i class="icon-calendar icon-white"></i> {{ 'archives' | trans | capitalize }}</a>
+                        </li>
                     </ul>
+
+                    <form class="navbar-form pull-right">
+                        <a class="btn btn-success" href="{{ path('new_post') }}">{{ 'add-news' | trans | capitalize }}</a>
+
+                        <div class="btn-group">
+                            <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="icon-user icon-white hidden-phone" id="user-logout-icon"></i> {{ app.user.username }}
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" style="text-align:right">
+                                <li><a href="{{ path('select_post_for_sharelink')}}">{{ 'share-files' | trans | capitalize }} <i class="icon-share"></i></a></li> 
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <li><a href="{{ path('admin_invitations')}}">{{ 'invite-users' | trans | capitalize }} <i class="icon-plus"></i></a></li>
+                            {% endif %}
+                                <li><a href="{{ path('fos_user_profile_edit') }}">{{ 'edit-profile' | trans | capitalize }} <i class="icon-user"></i></a></li> 
+                                <li><a href="{{ path('fos_user_security_logout') }}">{{ 'log-out' | trans | capitalize }} <i class="icon-off"></i></a></li>
+                            </ul>
+                        </div>
+                    </form>
                 </div>
-                
-            </form>
+            {% endif %}
 
+            </div><!-- container -->
           </div>
-        {% endif %}
-
-        </div><!-- container -->
-      </div>
-    </div><!-- navbar -->
+        </div><!-- navbar -->
     
     {% endblock %}
         
@@ -99,21 +97,19 @@
     {% block footer %}
         <hr>
         <center>
-            <p><span class="label label-primary">mini-net</span> - le réseau social familial le plus simple au monde</p>
+            <p><span class="label label-primary">mini-net</span> - {{ 'the-most-simple-social-network-for-your-family' | trans }}</p>
         </center>
     {% endblock %}
         
     </div><!-- container-->
-        
-    {% block javascripts %}
-        
-        <script type="text/javascript" src="{{ asset('jquery/jquery-1.10.1.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('jquery/jquery.color.js') }}" ></script>
-        <script type="text/javascript" src="{{ asset('bootstrap2/js/bootstrap.js') }}" ></script>
-        <script type="text/javascript" src="{{ asset('fancybox/jquery.fancybox.js?v=2.1.5' )}}"></script>
-        <script type="text/javascript" src="{{ asset('fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7') }}"></script>
-        
-    {% endblock %}
+    
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('jquery/jquery-1.10.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('jquery/jquery.color.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('bootstrap2/js/bootstrap.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('fancybox/jquery.fancybox.js?v=2.1.5' )}}"></script>
+    <script type="text/javascript" src="{{ asset('fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7') }}"></script>
+{% endblock %}
         
     </body>
 </html>

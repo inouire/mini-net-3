@@ -5,37 +5,129 @@
  Release: Working copy
  Locale: fr, French
  Exported by: Edouard
- Exported at: Fri, 23 Sep 2016 22:22:18 +0100 
+ Exported at: Thu, 29 Sep 2016 22:39:34 +0100 
 -->
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
     <file source-language="en" target-language="fr" tool-id="loco" datatype="plaintext" original="file.ext">
         <header>
-          <tool tool-id="loco" tool-name="Loco for Symfony" tool-version="1.0.14 20160915-1" tool-company="Loco" />
+          <tool tool-id="loco" tool-name="Loco for Symfony" tool-version="1.0.14 20160927-2" tool-company="Loco" />
         </header>
         <body> 
             <trans-unit id="loco:57e5819a14d725aa538b4568">
-                <source>Top-bar-Home</source>
+                <source>home</source>
                 <target>Accueil</target> 
             </trans-unit> 
             <trans-unit id="loco:57e581d214d72592538b4568">
-                <source>Top-bar-Albums</source>
+                <source>albums</source>
                 <target>Albums</target> 
             </trans-unit> 
             <trans-unit id="loco:57e581f914d72592538b456a">
-                <source>Top-bar-Tags</source>
+                <source>tags</source>
                 <target>Tags</target> 
             </trans-unit> 
             <trans-unit id="loco:57e5821a14d7250d548b4567">
-                <source>Top-bar-Videos</source>
+                <source>videos</source>
                 <target>Vidéos</target> 
             </trans-unit> 
             <trans-unit id="loco:57e5826914d7256b578b456c">
-                <source>Top-bar-Archives</source>
-                <target>Archives</target> 
+                <source>archives</source>
+                <target>archives</target> 
             </trans-unit> 
             <trans-unit id="loco:57e59a1c14d72590668b4569">
                 <source>the-most-simple-social-network-for-your-family</source>
                 <target>le réseau social familial le plus simple au monde</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57e7c59614d72589638b456b">
+                <source>the-family-social-network</source>
+                <target>le réseau social familial</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57e7c70214d725fe638b456b">
+                <source>add-news</source>
+                <target>donner des nouvelles</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57e7c75c14d725fe638b456d">
+                <source>share-files</source>
+                <target>partager des fichiers</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57e7c7ff14d72556678b4567">
+                <source>invite-users</source>
+                <target>inviter des membres</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57e7c80f14d72545638b4573">
+                <source>log-out</source>
+                <target>me déconnecter</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57e7c81f14d72567638b4569">
+                <source>edit-profile</source>
+                <target>modifier mon profil</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57e7d0dc14d725de678b4567">
+                <source>editing-post</source>
+                <target>édition de post</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57e7d17a14d725966b8b4567">
+                <source>published</source>
+                <target>publié</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57e7d1c714d7257d6b8b4568">
+                <source>non-published</source>
+                <target>non publié</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57e7d1f514d725966b8b4569">
+                <source>today</source>
+                <target>aujourd'hui</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57e7d28d14d725856b8b4567">
+                <source>delete</source>
+                <target>supprimer</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57e8387214d725aa1e8b4567">
+                <source>update-post</source>
+                <target>mettre à jour</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57e838c114d725aa1e8b456a">
+                <source>save-as-draft</source>
+                <target>garder comme brouillon</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57e838d414d725aa1e8b456c">
+                <source>save</source>
+                <target>sauver</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57e8390414d725311e8b4567">
+                <source>publish</source>
+                <target>publier</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57ead57652e1a1381e8b4569">
+                <source>add-picture</source>
+                <target>ajouter une photo</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57ead58a52e1a1381e8b456b">
+                <source>add-this-picture</source>
+                <target>ajouter cette photo</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57ead59b52e1a1391e8b4567">
+                <source>add-video</source>
+                <target>ajouter une vidéo</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57ead5be52e1a1391e8b4569">
+                <source>add-this-video</source>
+                <target>ajouter cette vidéo</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57ead61e52e1a1351e8b4567">
+                <source>confirm-delete-picture</source>
+                <target>Êtes vous sur de vouloir supprimer cette photo ?</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57ead66152e1a1371e8b4568">
+                <source>confirm-delete-video</source>
+                <target>Êtes vous sur de vouloir supprimer cette vidéo ?</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57ead68a52e1a1381e8b456d">
+                <source>confirm-delete-post</source>
+                <target>Êtes vous sur de vouloir supprimer définitivement cet article ?\n(les commentaires ainsi que les photos et vidéos attachées seront perdus)</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57ed868852e1a18a118b456f">
+                <source>tag-picture</source>
+                <target>ajouter tag</target> 
             </trans-unit> 
         </body>
     </file>
