@@ -12,7 +12,7 @@
             <ul class="thumbnails">   
 
 {% for video in video_list %}
-{% set post_date = video.post.date | localizeddate('medium','none','null', null,'d MMMM YYYY') %}
+{% set post_date = video.post.date | localizeddate('medium','none',null, null,'d MMMM YYYY') %}
 
                 <li class="span2" style="text-align:center">
                     <a href="{{ path('get_video',{"id":video.id}) }}"">

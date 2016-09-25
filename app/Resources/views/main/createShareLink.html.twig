@@ -11,7 +11,7 @@
                 Un lien public a été créé vers les pièces jointes de ce post:<br>
                 {% set hyperlink = url('get_sharelink',{"token":sharelink.token}) %}
                 <a href="{{  hyperlink }}">{{hyperlink}}</a><br>
-                <small>Ce lien expirera le {{sharelink.expirationDate | localizeddate('medium','none','null', null,'d MMMM YYYY')}} (dans {{sharelink.getExpirationDays + 1}} jours) </small>
+                <small>Ce lien expirera le {{sharelink.expirationDate | localizeddate('medium','none',null, null,'d MMMM YYYY')}} (dans {{sharelink.getExpirationDays + 1}} jours) </small>
               </h2>
             </div>
             <br>

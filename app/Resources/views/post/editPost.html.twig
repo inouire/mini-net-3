@@ -12,7 +12,7 @@
             
             <div class="span2" style="text-align: center;">
                 {% if post.published %}
-                    <h4>{{ post.date | localizeddate('long', 'none', 'null', null, 'dd MMMM Y') }}</h4>
+                    <h4>{{ post.date | localizeddate('long', 'none', null, null, 'dd MMMM Y') }}</h4>
                     <span class="label label-success">publié</span>
                 {% else %}
                     <h4>Aujourd'hui</h4>

@@ -49,7 +49,7 @@
 {% endif %}    
         
 {% set age = post.ageInDays %}
-{% set moreDate = post.date | localizeddate('medium','none','null', null,'EEEE d') %}
+{% set moreDate = post.date | localizeddate('medium','none',null, null,'EEEE d') %}
 {% if age == 0 %}
     {% set niceDate = 'Aujourd\'hui' %}
 {% elseif age == 1%}
@@ -57,10 +57,10 @@
 {% elseif age == 2 %}
     {% set niceDate = 'Avant-hier' %}
 {% elseif age <=7 %}
-    {% set niceDate = (post.date | localizeddate('medium','none','null', null,'EEEE'))~' dernier' %}
-    {% set moreDate = post.date | localizeddate('medium','none','null', null,'d MMMM') %}
+    {% set niceDate = (post.date | localizeddate('medium','none',null, null,'EEEE'))~' dernier' %}
+    {% set moreDate = post.date | localizeddate('medium','none',null, null,'d MMMM') %}
 {% else %}
-    {% set niceDate = post.date | localizeddate('medium','none','null', null,'EEEE d MMMM') %}
+    {% set niceDate = post.date | localizeddate('medium','none',null, null,'EEEE d MMMM') %}
     {% set moreDate = '' %}
 {% endif %}
         

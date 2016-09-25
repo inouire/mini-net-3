@@ -15,7 +15,7 @@
             <ul class="thumbnails">   
 
 {% for image in image_list %}
-{% set post_date = image.post.date | localizeddate('medium','none','null', null,'dd/MM/YY') %}
+{% set post_date = image.post.date | localizeddate('medium','none',null, null,'dd/MM/YY') %}
                 <li class="span2" style="text-align:center">
                     <a href="{{ path('get_image',{"id":image.id}) }}" class="fancybox" rel="fancybox[{{tag}}]">
                          <img src="{{ path('get_thumbnail',{"id":image.id}) }}" class="img-polaroid" />
