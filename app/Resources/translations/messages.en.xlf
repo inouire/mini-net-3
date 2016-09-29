@@ -5,7 +5,7 @@
  Release: Working copy
  Locale: en, English
  Exported by: Edouard
- Exported at: Thu, 29 Sep 2016 22:39:34 +0100 
+ Exported at: Thu, 29 Sep 2016 23:12:21 +0100 
 -->
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
     <file source-language="en" target-language="en" tool-id="loco" datatype="plaintext" original="file.ext">
@@ -128,6 +128,42 @@
             <trans-unit id="loco:57ed868852e1a18a118b456f">
                 <source>tag-picture</source>
                 <target>tag picture</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57ed8b1c52e1a112128b4570">
+                <source>add-comment</source>
+                <target>add comment</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57ed8c1b52e1a150128b4567">
+                <source>yesterday</source>
+                <target>yesterday</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57ed8c2e52e1a120128b4568">
+                <source>day-before-yesterday</source>
+                <target>day before yesterday</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57ed8d5152e1a1fe118b4571">
+                <source>last-%day%</source>
+                <target>last %day%</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57ed8ea152e1a11f128b4569">
+                <source>at-about</source>
+                <target>at about</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57ed8ed752e1a120128b456b">
+                <source>edited-on</source>
+                <target>edited on</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57ed901852e1a130128b456b">
+                <source>album-for-%year%</source>
+                <target>album for year %year%</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57ed90e752e1a120128b456e">
+                <source>album-for-%tag%</source>
+                <target>album for "%tag%" tag</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57ed914452e1a150128b4569">
+                <source>album</source>
+                <target>album</target> 
             </trans-unit> 
         </body>
     </file>

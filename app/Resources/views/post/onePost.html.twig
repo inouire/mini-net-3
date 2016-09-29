@@ -1,3 +1,4 @@
+{# TODO compute these properties in a service #}
 {% if post.hasAttachedFiles %}
     {% if post.totalAttachedFiles == 1 %}
         {% set contentWidth = 'span6' %}
@@ -51,95 +52,93 @@
 {% set age = post.ageInDays %}
 {% set moreDate = post.date | localizeddate('medium','none',null, null,'EEEE d') %}
 {% if age == 0 %}
-    {% set niceDate = 'Aujourd\'hui' %}
+    {% set niceDate = 'today' | trans | capitalize %}
 {% elseif age == 1%}
-    {% set niceDate = 'Hier' %}
+    {% set niceDate = 'yesterday' | trans | capitalize %}
 {% elseif age == 2 %}
-    {% set niceDate = 'Avant-hier' %}
+    {% set niceDate = 'day-before-yesterday' | trans | capitalize %}
 {% elseif age <=7 %}
-    {% set niceDate = (post.date | localizeddate('medium','none',null, null,'EEEE'))~' dernier' %}
+    {% set day = post.date | localizeddate('medium','none',null, null,'EEEE') %}
+    {% set niceDate = 'last-%day%' | trans({'%day%': day}) | capitalize %}
     {% set moreDate = post.date | localizeddate('medium','none',null, null,'d MMMM') %}
 {% else %}
     {% set niceDate = post.date | localizeddate('medium','none',null, null,'EEEE d MMMM') %}
     {% set moreDate = '' %}
 {% endif %}
         
-        <div class="row" id="{{ post.id }}-row">
-             
-            <a id="{{ post.id }}" class="anchoroffset"></a>
-             
-            <div class="span2">
-                {% if new_day=='yes' %}
-                    <h4>{{ niceDate }}</h4>
-                {% else %}
-                    <h4></h4>
-                {% endif %}
+<div class="row" id="{{ post.id }}-row">
+     
+    <a id="{{ post.id }}" class="anchoroffset"></a>
+     
+    <div class="span2">
+    {% if new_day == 'yes' %}
+        <h4>{{ niceDate }}</h4>
+    {% else %}
+        <h4></h4>
+    {% endif %}
 
-                <p class="muted">
-                    {{ moreDate }}
-                    
-                    {% if date(post.date) >= date('-1days') %}
-                        (vers {{ post.approxHour }}h)
-                    {% endif %}
-                </p>
-                
-                {% set publish_date = post.date | date('Ymd') %}
-                {% set edit_date = post.editDate | date('Ymd') %}
-                {% if edit_date - publish_date >= 1 %}
-                    <p class="muted">édité le {{ post.editDate | date('d/m/Y') }}</p>
-                {% endif %}
-                
-            </div>
-            
-            <div class="{{ contentWidth }}">
-                <h4>
-                    <a href="{{ path('view_post',{'id': post.id }) }}" >{{ post.author }}</a>
-                    {% if share_selection is defined and share_selection and post.hasAttachedFiles %}
-                        <a href="{{ path('create_sharelink', {'id': post.id }) }}" class="pull-right">
-                            <i class="icon-share"></i>
-                        </a>
-                    {% endif %}
-                    {% if post.author == app.user.username %}
-                        <a href="{{ path('edit_post', {'id': post.id }) }}" class="pull-right">
-                            <i class="icon-pencil"></i>
-                        </a>
-                    {% endif %}
-                </h4>
+        <p class="muted">
+            {{ moreDate }}
+        {% if date(post.date) >= date('-1days') %}
+            ({{ 'at-about' | trans }} {{ post.approxHour }}h)
+        {% endif %}
+        </p>
+        
+    {% set publish_date = post.date | date('Ymd') %}
+    {% set edit_date = post.editDate | date('Ymd') %}
+    {% if edit_date - publish_date >= 1 %}
+        <p class="muted">{{ 'edited-on' | trans }} {{ post.editDate | date('d/m/Y') }}</p>
+    {% endif %}
+        
+    </div>
+    
+    <div class="{{ contentWidth }}">
+        <h4>
+            <a href="{{ path('view_post',{'id': post.id }) }}" >{{ post.author }}</a>
+        {% if share_selection is defined and share_selection and post.hasAttachedFiles %}
+            <a href="{{ path('create_sharelink', {'id': post.id }) }}" class="pull-right">
+                <i class="icon-share"></i>
+            </a>
+        {% endif %}
+        {% if post.author == app.user.username %}
+            <a href="{{ path('edit_post', {'id': post.id }) }}" class="pull-right">
+                <i class="icon-pencil"></i>
+            </a>
+        {% endif %}
+        </h4>
 
-                <p>{{ post.htmlcontent | striptags('<p><a><br>') | raw }}</p>
-                
-                {% if post.hasAttachedFiles %}
-                    {% include 'post/comments.html.twig' %}
-                {% endif %}
-                
-            </div>
+        <p>{{ post.htmlcontent | striptags('<p><a><br>') | raw }}</p>
+        
+        {% if post.hasAttachedFiles %}
+            {% include 'post/comments.html.twig' %}
+        {% endif %}
+    </div>
+    
+{% if post.hasAttachedFiles %}
+    <div class="{{ imagesWidth }}" style="text-align:center">
+        <ul class="thumbnails">
+        {% for video in post.videos %}
+            <li class="{{thumbWidth}}">
+                <a href="{{ path('get_video',{'id':video.id}) }}">
+                     <img src="{{ path('get_video_thumbnail',{'id':video.id}) }}" class="img-polaroid"/>
+                </a>
+            </li>
+        {% endfor %}
             
-            {% if post.hasAttachedFiles %}
-            <div class="{{ imagesWidth }}" style="text-align:center">
-                <ul class="thumbnails">
-                    {% for video in post.videos %}
-                    <li class="{{thumbWidth}}">
-                        <a href="{{ path('get_video',{'id':video.id}) }}">
-                             <img src="{{ path('get_video_thumbnail',{'id':video.id}) }}" class="img-polaroid"/>
-                        </a>
-                    </li>
-                    {% endfor %}
-                    
-                    {% for image in post.images %}
-                    <li class="{{thumbWidth}}">
-                        <a href="{{ path('get_image',{'id':image.id}) }}" class="fancybox" rel="album[{{post.id}}]">
-                             <img src="{{ path('get_thumbnail',{'id':image.id}) }}" class="img-polaroid"/>
-                        </a>
-                    </li>
-                    {% endfor %}
-                    
-                </ul>
-            </div>
-            {% else %}
-            <div class="{{ imagesWidth }}">
-                {% include 'post/comments.html.twig' %}
-            </div>
-            {% endif %}
+        {% for image in post.images %}
+            <li class="{{thumbWidth}}">
+                <a href="{{ path('get_image',{'id':image.id}) }}" class="fancybox" rel="album[{{post.id}}]">
+                     <img src="{{ path('get_thumbnail',{'id':image.id}) }}" class="img-polaroid"/>
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+{% else %}
+    <div class="{{ imagesWidth }}">
+        {% include 'post/comments.html.twig' %}
+    </div>
+{% endif %}
 
-            
-        </div>
+    
+</div>

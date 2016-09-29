@@ -1,6 +1,6 @@
 {% extends 'app.html.twig' %}
 
-{% block title %}albums pour l'année {{ requested_year }}{% endblock %}
+{% block title %}{{ 'album-for-%year%' | trans({'%year%': requested_year}) }}{% endblock %}
 
 {% block body %}
 
@@ -9,18 +9,15 @@
     {% include 'default/monthsOfYearRibbon.html.twig' %}
 
     <div class="row">
-        
         <div class="span12">
             <ul class="thumbnails">   
-
-{% for image in image_list %}
+            {% for image in image_list %}
                 <li class="span2" style="text-align:center">
                     <a href="{{ path('get_image',{"id":image.id}) }}" class="fancybox" rel="fancybox[{{requested_year}}]">
                          <img src="{{ path('get_thumbnail',{"id":image.id}) }}" class="img-polaroid" />
                     </a>
                 </li>
-{% endfor %}
-            
+            {% endfor %}
             </ul>
         </div>
    </div>
@@ -33,7 +30,7 @@
 
         $(document).ready(function(){
             
-            //init fancybox on all pictures, with thumb
+            //init fancybox on all pictures, with thumbnails
             $(".fancybox").fancybox({
                 loop: false,
                 openEffect: 'fade',
