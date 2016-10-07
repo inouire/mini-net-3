@@ -116,12 +116,6 @@ class PostController extends Controller
      */
     public function updateContentAction(Request $request){
 
-    //     $form = $this->createFormBuilder()
-    //     // ...
-    //     ->getForm();
-
-    // $form->handleRequest($request);
-
         $post_from_form = new PostForm();
         $form = $this->getPostForm($post_from_form);
 

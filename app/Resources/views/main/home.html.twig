@@ -1,63 +1,13 @@
 {% extends 'app.html.twig' %}
 
 {% block body %}
-    
-    {% set new_day='yes' %}
-    
-    {% for post in post_list %}
-        
-        {% if current_datestamp is defined %}
-            {% if post.date | date('Ymd') != current_datestamp %}
-                <hr>
-                {% set new_day='yes' %}
-            {% else %}
-                {% set new_day='no' %}
-            {% endif %}
-        {% endif %}
-        {% set current_datestamp = post.date | date('Ymd') %}
-        
-        {% include 'post/onePost.html.twig' %}
-
-    {% endfor %}
-        
-    <hr>
-    
-    {% if current_bonus > 0 %}
-    
-        <a id="more" class="anchoroffset"></a>
-        
-        {% for post in post_secondary_list %}
-            
-            {% if current_datestamp is defined %}
-                {% if post.date | date('Ymd') != current_datestamp %}
-                    <hr>
-                    {% set new_day='yes' %}
-                {% else %}
-                    {% set new_day='no' %}
-                {% endif %}
-            {% endif %}
-            {% set current_datestamp = post.date | date('Ymd') %}
-            
-            {% include 'post/onePost.html.twig' %}
-
-        {% endfor %}  
-        
-    {% endif %}
-       
-    {% if post_list | length >= 8 %}
-    <div class="row" style="text-align:center">
-        <a class="btn btn-inverse" href="{{ path('home', {'more':current_bonus+1}) }}#more"><i class="icon-chevron-down icon-white"></i> Voir des nouvelles plus anciennes</a>
-    </div>
-    {% endif %}
-        
-        
+    {{ render(controller('AppBundle:Home:posts', { 'page': 1 })) }}       
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     
-    <!--<script src="{{ asset('js/comments.js') }}" type="text/javascript"></script>-->
-    
+   
     <script type="text/javascript">
        
         $(document).ready(function(){
