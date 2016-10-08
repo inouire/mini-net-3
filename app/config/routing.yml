@@ -1,6 +1,6 @@
-# app:
-#     resource: "@AppBundle/Controller/"
-#     type:     annotation
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
 
 inouire_mininet:
     resource: "@AppBundle/Resources/config/routing.yml"

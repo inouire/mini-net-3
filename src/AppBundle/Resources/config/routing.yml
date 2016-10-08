@@ -1,17 +1,5 @@
 # main routes
         
-home:
-    path:  /
-    requirements:
-        _method:  GET
-    defaults: { _controller: AppBundle:Home:home }
-    
-oldHome:
-    path:  /home
-    requirements:
-        _method:  GET
-    defaults: { _controller: AppBundle:Home:oldHome }
-
 archives:
     path:  /posts
     requirements:

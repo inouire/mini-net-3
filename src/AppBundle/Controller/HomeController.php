@@ -4,19 +4,22 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class HomeController extends Controller
 {
-    /*
-     * Redirection from the old '/home' url to '/'
+    /**
+     * Redirection from the old home url to the new one
+     * @Route("/home")
      */
     public function oldHomeAction()
     {
         return $this->redirect($this->generateUrl('home'));
     }
    
-   /**
-     * Home page 
+    /**
+     * Home page
+     * @Route("/", name="home") 
      */
     public function homeAction(Request $request)
     {       
