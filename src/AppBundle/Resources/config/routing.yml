@@ -80,13 +80,6 @@ update_post:
     
 # routes for actions on comments
 
-post_comment:
-    path:  /comment
-    requirements:
-        _method:  POST
-        _format:  json
-    defaults: { _controller: AppBundle:Comment:postComment }
-
 update_comment:
     path:  /comment/{id}
     requirements:

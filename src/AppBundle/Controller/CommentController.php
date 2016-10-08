@@ -4,6 +4,8 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use AppBundle\Entity\Comment;
 
 class CommentController extends Controller
@@ -11,33 +13,24 @@ class CommentController extends Controller
     
     /**
      * Add new comment to a post
+     * @Route("/comment", name = "add_comment")
+     * @Method("POST")
      */
-    public function postCommentAction(Request $resquest){
-
-        $user = $this->getUser();
-        $post_id         = $resquest->request->get('post_id');
-        $comment_content = $resquest->request->get('comment');
+    public function postCommentAction(Request $request)
+    {
+        $user            = $this->getUser();
+        $post_id         = $request->request->get('post_id');
+        $comment_content = $request->request->get('content');
         
-        // get corresponding post
         $em = $this->getDoctrine()->getManager();
         $post = $em->getRepository('AppBundle:Post')->find($post_id);
         
         // check that this post exists
         if($post == null){
-            return $this->render('AppBundle:Default:commentAjaxResponse.json.twig',array(
-                'status'=> 'error',
-                'message' => 'post '+$post_id+' does not exist'
-            ));
+            // TODO render real template here
+            return 'Error, post not found';
         }
-        
-        // check if the commenter is the author of the post (for correct color display)
-        if( $post->getAuthor() == $user ){
-            $is_author_of_post = 1;
-        }else{
-            $is_author_of_post = 0;
-        }
-        
-        // create comment and persist it to database
+                
         $comment = new Comment();
         $comment->setContent($comment_content)
                 ->setAuthor($user)
@@ -45,15 +38,11 @@ class CommentController extends Controller
         $em->persist($comment);
         $em->flush();
         
-        // render json response
-        return $this->render('default/commentAjaxResponse.json.twig',array(
-            'status'=> 'ok',
-            'message' => 'comment added to post '.$post_id,
-            'comment_id' => $comment->getId(),
-            'comment_content' => $comment_content,
-            'is_author_of_post' => $is_author_of_post
-        ));
-            
+        return $this->render('post/oneComment.html.twig',array(
+            'post'         => $post,
+            'comment'      => $comment,
+            'last_comment' => true
+        ));   
     }
     
     /**

@@ -110,7 +110,7 @@
         <p>{{ post.htmlcontent | striptags('<p><a><br>') | raw }}</p>
         
         {% if post.hasAttachedFiles %}
-            {% include 'post/comments.html.twig' %}
+            {{ include('post/comments.html.twig') }}
         {% endif %}
     </div>
     
@@ -136,7 +136,7 @@
     </div>
 {% else %}
     <div class="{{ imagesWidth }}">
-        {% include 'post/comments.html.twig' %}
+        {{ include('post/comments.html.twig') }}
     </div>
 {% endif %}
 

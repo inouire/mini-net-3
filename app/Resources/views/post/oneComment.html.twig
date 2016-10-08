@@ -1,0 +1,29 @@
+
+{% if comment.author.id == post.author.id %}
+    {% set commentClass = 'alert-success author-comment' %}
+{% else %}
+    {% set commentClass = 'alert-info' %}
+{% endif %}
+    
+<div class="alert {{ commentClass }} very-close">   
+    <strong>{{ comment.author }}: </strong>
+    <span id="comment-content-{{comment.id}}">{{ comment.content }}</span>
+</div>
+
+{% if last_comment %}
+<div id="comment-placeholder-{{post.id}}"></div>
+{% endif %}
+       <!--  <span id="comment-edit-block-{{comment.id}}" style="display: none">
+            <textarea id="comment-edit-area-{{comment.id}}" style="width:95%" rows="2">{{ comment.content }}</textarea>
+        </span> -->
+<!-- {% if comment.author.id == app.user.id %}
+    {% if date(comment.date) >= date('-12hours') %}
+        <i class="icon-ok update-comment" value="{{comment.id}}" id="update-comment-{{comment.id}}" style="display: none"></i>
+        <i class="icon-edit edit-comment" value="{{comment.id}}" id="edit-comment-{{comment.id}}"></i>
+    {% endif %}
+        <div class="close delete-comment" id="{{comment.id}}">&times;</div>
+{% endif %}
+ -->
+
+
+

@@ -64,7 +64,7 @@ class RegisterUserListener implements EventSubscriberInterface
             }
 
             // send a notif email to admin
-            $template_content = $this->twig->loadTemplate('AppBundle:Admin:registration_notification_email.txt.twig');
+            $template_content = $this->twig->loadTemplate('admin/registration_notification_email.txt.twig');
             $body = $template_content->render(array('user' => $registered_user));
             $message = \Swift_Message::newInstance()
                 ->setSubject('Nouvel utilisateur inscrit: '.$registered_user->getUsername().' / '.$registered_user->getEmail())
