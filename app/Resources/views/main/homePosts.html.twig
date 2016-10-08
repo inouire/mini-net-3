@@ -1,0 +1,29 @@
+{% set new_day='yes' %}
+    
+{% for post in posts %}
+    
+    {% if current_datestamp is defined %}
+        {% if post.date | date('Ymd') != current_datestamp %}
+            <hr>
+            {% set new_day='yes' %}
+        {% else %}
+            {% set new_day='no' %}
+        {% endif %}
+    {% endif %}
+    {% set current_datestamp = post.date | date('Ymd') %}
+    
+    {% include 'post/onePost.html.twig' %}
+
+{% endfor %}
+
+<hr>
+       
+{% if posts | length >= 4 %}
+<div class="row" style="text-align:center">
+    <button class="btn btn-inverse" ic-get-from="{{ path('home', {'page':next_page}) }}"
+                                    ic-target="closest div"
+                                    ic-replace-target="true">
+        <i class="icon-chevron-down icon-white" ></i> {{ 'load-older-news' | trans | capitalize }}
+    </button>
+</div>
+{% endif %}

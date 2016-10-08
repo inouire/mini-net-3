@@ -1,29 +1,57 @@
+{# Display comment itself #}
+{% if comment is not null %}
+    {% if comment.author.id == post.author.id %}
+        {% set commentClass = 'alert-success author-comment' %}
+    {% else %}
+        {% set commentClass = 'alert-info' %}
+    {% endif %}
+    
+<div class="alert {{ commentClass }} very-close" id="comment-{{comment.id}}">   
+    <strong>{{ comment.author }}: </strong>
+    <span id="comment-content-{{comment.id}}">{{ comment.content }}</span>
+{% if comment.author.id == app.user.id %}
+    <div class="close delete-comment"
+         id="delete-comment-{{comment.id}}"
+         ic-delete-from="{{ path('delete_comment', { id: comment.id }) }}"
+         ic-target="#comment-{{comment.id}}"
+         ic-replace-target="true"
+         ic-trigger-on="confirmed-by-user">
+         &times;
+     </div>
+{% endif %}
+</div>
+{% endif %}
 
-{% if comment.author.id == post.author.id %}
+{# Display new comment form at the end of last comment of the list #}
+{% if last_comment %}
+<div id="comment-placeholder-{{post.id}}">
+    
+{% if app.user.id == post.author.id %}
     {% set commentClass = 'alert-success author-comment' %}
 {% else %}
     {% set commentClass = 'alert-info' %}
 {% endif %}
-    
-<div class="alert {{ commentClass }} very-close">   
-    <strong>{{ comment.author }}: </strong>
-    <span id="comment-content-{{comment.id}}">{{ comment.content }}</span>
-</div>
 
-{% if last_comment %}
-<div id="comment-placeholder-{{post.id}}"></div>
+    <form id="comment-form-{{ post.id }}">
+        <div class="alert {{commentClass}} very-close" style="display: none">
+            <strong>{{ app.user.username }}: </strong>
+            <input style="width:95%" name="content" size="16" type="text">
+            <input type="hidden" name="post_id" value="{{post.id}}">
+        </div>
+        <button type="submit" style="display: none"
+                class="btn comment-button pull-right"
+                ic-post-to="{{ path('add_comment') }}"
+                ic-target="#comment-placeholder-{{post.id}}"
+                ic-replace-target="true">
+                {{ 'add-comment' | trans | capitalize }}
+        </button>
+        <button class="btn comment-button pull-right">
+            Toggle form
+        </button>
+    </form>
+
+</div>
 {% endif %}
-       <!--  <span id="comment-edit-block-{{comment.id}}" style="display: none">
-            <textarea id="comment-edit-area-{{comment.id}}" style="width:95%" rows="2">{{ comment.content }}</textarea>
-        </span> -->
-<!-- {% if comment.author.id == app.user.id %}
-    {% if date(comment.date) >= date('-12hours') %}
-        <i class="icon-ok update-comment" value="{{comment.id}}" id="update-comment-{{comment.id}}" style="display: none"></i>
-        <i class="icon-edit edit-comment" value="{{comment.id}}" id="edit-comment-{{comment.id}}"></i>
-    {% endif %}
-        <div class="close delete-comment" id="{{comment.id}}">&times;</div>
-{% endif %}
- -->
 
 
 

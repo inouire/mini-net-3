@@ -22,6 +22,13 @@
                 nextClick: true,
             });
                 
+            $(".delete-comment").click(function (event) {
+                if(confirm("Êtes vous sur de vouloir supprimer ce commentaire ?")){
+                    var button_id = event.target.id;
+                    $('#'+button_id).trigger('confirmed-by-user');
+                }
+            });
+
             function deleteCommentListener(e){
                 e.preventDefault();
                 var comment_id = e.target.id;
@@ -110,14 +117,14 @@
             }
             
             //adding listener on all comment buttons
-            $(".comment-button").click( function (event) {
-                commentListener(event);
-            });
+            // $(".comment-button").click( function (event) {
+            //     commentListener(event);
+            // });
             
             //adding listener on all delete comment buttons
-            $(".delete-comment").click( function (event) {
-                deleteCommentListener(event);
-            });
+            //$(".delete-comment").click( function (event) {
+            //    deleteCommentListener(event);
+            //});
             
             $(".edit-comment").click( function (event) {
                 var comment_id = event.target.getAttribute("value");

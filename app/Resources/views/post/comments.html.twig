@@ -2,24 +2,3 @@
 	{{ include('post/oneComment.html.twig', {comment: comment, last_comment: loop.last}) }}
 {% endfor %}
 
-{% if app.user.id == post.author.id %}
-    {% set commentClass = 'alert-success author-comment' %}
-{% else %}
-    {% set commentClass = 'alert-info' %}
-{% endif %}
-
-<!-- style="display: none" -->
-<form id="comment-form-{{ post.id }}">
-    <div class="alert {{commentClass}} very-close">
-        <strong>{{ app.user.username }}: </strong>
-        <input style="width:95%" name="content" size="16" type="text">
-        <input type="hidden" name="post_id" value="{{post.id}}">
-    </div>
-    <button type="submit"
-    		class="btn comment-button pull-right"
-    		ic-post-to="{{ path('add_comment') }}"
-	   		ic-target="#comment-placeholder-{{post.id}}"
-    		ic-replace-target="true">
-    		{{ 'add-comment' | trans | capitalize }}
-	</button>
-</form>

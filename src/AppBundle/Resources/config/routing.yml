@@ -87,14 +87,6 @@ update_comment:
         _format:  json
     defaults: { _controller: AppBundle:Comment:updateComment }
     
-delete_comment:
-    path:  /comment/{id}
-    requirements:
-        comment_id:  \d+
-        _method:  DELETE
-        _format:  json
-    defaults: { _controller: AppBundle:Comment:deleteComment }
-    
 # routes for actions on images
 
 get_image:
