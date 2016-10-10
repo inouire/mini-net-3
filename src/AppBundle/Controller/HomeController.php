@@ -23,23 +23,12 @@ class HomeController extends Controller
      */
     public function homeAction(Request $request)
     {       
-        if($request->query->has('page')){
-            $page = $request->query->get('page');
-        }
-        if(!isset($page) || $page < 1){
-            $page = 1;
-        }
-        
-        if($page == 1) {
-            return $this->render('main/home.html.twig');
-        } else {
-            return $this->forward('AppBundle:Home:posts', array('page' => $page));
-        }
+        return $this->render('main/home.html.twig');
     } 
 
     /**
      * Paginated home page content
-     * Internal controller, no route attached
+     * @Route("/home/{page}", name="home_paginated", requirements={"page": "\d+"})
      */
     public function postsAction($page)
     {

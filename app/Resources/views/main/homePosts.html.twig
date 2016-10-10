@@ -20,7 +20,7 @@
        
 {% if posts | length >= 4 %}
 <div class="row" style="text-align:center">
-    <button class="btn btn-inverse" ic-get-from="{{ path('home', {'page':next_page}) }}"
+    <button class="btn btn-inverse" ic-get-from="{{ path('home_paginated', {'page':next_page}) }}"
                                     ic-target="closest div"
                                     ic-replace-target="true">
         <i class="icon-chevron-down icon-white" ></i> {{ 'load-older-news' | trans | capitalize }}
