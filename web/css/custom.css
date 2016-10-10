@@ -49,3 +49,9 @@ body {
 .admin{
     color: #C61917;
 }
+.comment {
+    transition: all .3s;
+}
+.comment.ic-transitioning {
+    opacity: 0;
+}

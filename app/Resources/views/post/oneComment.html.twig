@@ -6,7 +6,7 @@
         {% set commentClass = 'alert-info' %}
     {% endif %}
     
-<div class="alert {{ commentClass }} very-close" id="comment-{{comment.id}}">   
+<div class="alert {{ commentClass }} very-close comment" id="comment-{{comment.id}}">   
     <strong>{{ comment.author }}: </strong>
     <span id="comment-content-{{comment.id}}">{{ comment.content }}</span>
 {% if comment.author.id == app.user.id %}
