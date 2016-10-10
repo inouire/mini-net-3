@@ -5,12 +5,12 @@
  Release: Working copy
  Locale: fr, French
  Exported by: Edouard
- Exported at: Fri, 07 Oct 2016 22:19:35 +0100 
+ Exported at: Mon, 10 Oct 2016 21:40:37 +0100 
 -->
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
     <file source-language="en" target-language="fr" tool-id="loco" datatype="plaintext" original="file.ext">
         <header>
-          <tool tool-id="loco" tool-name="Loco for Symfony" tool-version="1.0.14 20161007-1" tool-company="Loco" />
+          <tool tool-id="loco" tool-name="Loco for Symfony" tool-version="1.0.15 20161010-2" tool-company="Loco" />
         </header>
         <body> 
             <trans-unit id="loco:57e5819a14d725aa538b4568">
@@ -130,8 +130,8 @@
                 <target>ajouter tag</target> 
             </trans-unit> 
             <trans-unit id="loco:57ed8b1c52e1a112128b4570">
-                <source>add-comment</source>
-                <target>commenter</target> 
+                <source>send-comment</source>
+                <target>envoyer</target> 
             </trans-unit> 
             <trans-unit id="loco:57ed8c1b52e1a150128b4567">
                 <source>yesterday</source>
@@ -168,6 +168,10 @@
             <trans-unit id="loco:57f8115052e1a1c9098b4568">
                 <source>load-older-news</source>
                 <target>voir des nouvelles plus anciennes</target> 
+            </trans-unit> 
+            <trans-unit id="loco:57fbfcb452e1a1a8608b456c">
+                <source>comment-post</source>
+                <target>commenter</target> 
             </trans-unit> 
         </body>
     </file>

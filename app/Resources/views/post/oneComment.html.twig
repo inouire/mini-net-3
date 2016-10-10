@@ -43,10 +43,10 @@
                 ic-post-to="{{ path('add_comment') }}"
                 ic-target="#comment-placeholder-{{post.id}}"
                 ic-replace-target="true">
-                {{ 'add-comment' | trans | capitalize }}
+                {{ 'send-comment' | trans | capitalize }} »
         </button>
-        <button class="btn comment-button pull-right">
-            Toggle form
+        <button class="btn comment-button pull-right toggle-comment-form">
+            {{ 'comment-post' | trans | capitalize }} » 
         </button>
     </form>
 

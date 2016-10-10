@@ -29,27 +29,10 @@
                 }
             });
 
-            // $(".edit-comment").click( function (event) {
-            //     var comment_id = event.target.getAttribute("value");
-            //     $('#edit-comment-'+comment_id).fadeOut(100);
-            //     $('#comment-content-'+comment_id).fadeOut(100);
-            //     $('#comment-edit-block-'+comment_id).fadeIn(100);
-            //     $('#update-comment-'+comment_id).fadeIn(100);
-            // });
-            // $(".update-comment").click( function (event) {
-            //     var comment_id = event.target.getAttribute("value");
-            //     var comment_content = $('#comment-edit-area-'+comment_id).val();
-            //     $('#comment-edit-block-'+comment_id).fadeOut(100);
-            //     $('#update-comment-'+comment_id).fadeOut(100);
-                
-            //     //update content
-            //     updateComment(comment_id,comment_content);
-                
-            //     $('#edit-comment-'+comment_id).fadeIn(100);
-            //     $('#comment-content-'+comment_id).fadeIn(100);
-                
-            // });
-
+            $(".toggle-comment-form").click(function(event) {
+                event.preventDefault();
+                $(this).parent().children().toggle();
+            });
         });
     </script>
 {% endblock %}
